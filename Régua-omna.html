@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Régua Omna · Medidas de Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#2a2160;--line:rgba(255,255,255,.07);--card:#fff;--ink:#1d1740;--mut:#6b6690;--gold:#f5b83d;--red:#e5484d;--yel:#fff3b8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{color-scheme:dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#fff;background-color:var(--bg);
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;min-height:100vh}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 18px 40px}
+h1{font-family:Fredoka,sans-serif;font-size:clamp(32px,6vw,52px);margin:0;line-height:1}
+h1 span{color:var(--gold)}
+.sub{margin:8px 0 22px;color:#cfcaf0}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.search{flex:1;min-width:200px;padding:12px 16px;border-radius:999px;border:2px solid transparent;font:500 15px Inter,sans-serif;background:#fff;color:var(--ink)}
+.search:focus{outline:none;border-color:var(--gold)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{font:600 14px Fredoka,sans-serif;padding:8px 16px;border-radius:999px;border:2px solid rgba(255,255,255,.25);background:transparent;color:#fff;cursor:pointer}
+.tab.on{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);color:var(--ink);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.pv{height:130px;background:var(--yel);border-radius:12px;display:flex;align-items:center;justify-content:center;
+background-image:linear-gradient(rgba(229,72,77,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(229,72,77,.25) 1px,transparent 1px);background-size:12px 12px}
+.pv i{display:block;background:var(--ink);border:2px solid var(--gold);border-radius:4px}
+.plat{font:600 11px 'IBM Plex Mono',monospace;color:var(--red);text-transform:uppercase;letter-spacing:.06em}
+.nm{font:600 17px Fredoka,sans-serif;line-height:1.15}
+.sz{font:500 20px 'IBM Plex Mono',monospace}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ch{font:500 12px 'IBM Plex Mono',monospace;background:#efecff;border-radius:999px;padding:4px 10px}
+.nt{font-size:12.5px;color:var(--mut);min-height:32px}
+.cp{font:600 13px Fredoka,sans-serif;border:0;border-radius:999px;padding:7px 14px;background:var(--ink);color:#fff;cursor:pointer}
+.cp.ok{background:var(--gold);color:var(--ink)}
+.calc{margin-top:30px;background:var(--card);color:var(--ink);border-radius:18px;padding:18px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.calc h2{font-family:Fredoka,sans-serif;margin:0 0 4px}
+.calc p{margin:0 0 12px;color:var(--mut);font-size:14px}
+.f{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.f label{display:flex;flex-direction:column;font:600 12px 'IBM Plex Mono',monospace;gap:4px;color:var(--mut)}
+.f input{width:120px;padding:10px;border-radius:10px;border:2px solid #d9d5f2;font:500 16px 'IBM Plex Mono',monospace;color:var(--ink);background:#fff}
+.res{font:600 22px 'IBM Plex Mono',monospace;padding:10px 14px;background:var(--yel);border-radius:10px;min-width:150px}
+.empty{grid-column:1/-1;text-align:center;padding:30px;color:#cfcaf0}
+footer{margin-top:30px;text-align:center;color:#cfcaf0;font-size:13px}
+footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Régua <span>Omna</span></h1>
+<p class="sub">Todas as medidas do design gráfico num lugar só. Clique em copiar e cole no Canva, Photoshop ou Illustrator.</p>
+<div class="bar"><input class="search" id="q" type="search" placeholder="Buscar: story, capa, banner, A4…"></div>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+
+<div class="calc">
+<h2>Calculadora de proporção</h2>
+<p>Tem uma arte pronta e quer saber a altura em outro tamanho? Digite as medidas originais e a nova largura.</p>
+<div class="f">
+<label>LARGURA ORIGINAL<input id="a" type="number" value="1080"></label>
+<label>ALTURA ORIGINAL<input id="b" type="number" value="1350"></label>
+<label>NOVA LARGURA<input id="c" type="number" value="540"></label>
+<div class="res" id="r"></div>
+</div>
+</div>
+<footer>feito por <b>@omnadesigner</b> · medidas em pixels (px) · as plataformas mudam, confira antes de publicar<br>Midori: capa aberta = 2× a largura do miolo + 2 a 3 cm de lombada, e 1 a 1,5 cm mais alta que o miolo.</footer>
+</div>
+<script>
+const D=[
+["Instagram","Post retrato (feed)",1080,1350,"Formato mais usado, ocupa mais tela no feed."],
+["Instagram","Post grid atual",1080,1440,"Proporção 3:4, a do grid do perfil. Deixe o centro seguro."],
+["Instagram","Post quadrado",1080,1080,"Clássico 1:1."],
+["Instagram","Post paisagem",1080,566,"Proporção 1,91:1."],
+["Instagram","Carrossel",1080,1350,"Todas as páginas na mesma proporção."],
+["Instagram","Story / Reels",1080,1920,"Deixe ~250 px livres em cima e embaixo."],
+["Instagram","Foto de perfil",320,320,"Exibida em círculo, centralize o rosto/logo."],
+["LinkedIn","Capa de perfil",1584,396,"A foto de perfil cobre o canto esquerdo."],
+["LinkedIn","Capa de página (empresa)",1128,191,"Faixa bem baixa, texto grande."],
+["LinkedIn","Post com imagem",1200,627,"Proporção 1,91:1."],
+["LinkedIn","Post quadrado",1080,1080,"Boa leitura no celular."],
+["LinkedIn","Foto de perfil",400,400,"Exibida em círculo."],
+["LinkedIn","Logo da empresa",300,300,"Quadrado."],
+["YouTube","Thumbnail",1280,720,"Até 2 MB, 16:9. Evite texto no canto inferior direito."],
+["YouTube","Banner do canal",2560,1440,"Área segura para todos os aparelhos: 1546 × 423 px no centro."],
+["YouTube","Foto de perfil do canal",800,800,"Exibida em círculo."],
+["YouTube","Vídeo Full HD",1920,1080,"Padrão horizontal."],
+["YouTube","Vídeo 4K",3840,2160,"16:9."],
+["YouTube","Shorts",1080,1920,"Vertical 9:16."],
+["YouTube","Marca-d'água do vídeo",150,150,"Aparece no canto inferior direito do player. PNG, GIF ou BMP de até 1 MB; use fundo transparente."],
+["Facebook","Capa de página",851,315,"Cortada no celular, mantenha o essencial no centro."],
+["Facebook","Post com imagem",1200,630,"Compartilhamento de link e imagem."],
+["Facebook","Stories",1080,1920,"9:16."],
+["Facebook","Foto de perfil",320,320,"Exibida em círculo."],
+["X (Twitter)","Capa",1500,500,"3:1."],
+["X (Twitter)","Post com imagem",1600,900,"16:9."],
+["X (Twitter)","Foto de perfil",400,400,"Exibida em círculo."],
+["TikTok","Vídeo",1080,1920,"9:16."],
+["TikTok","Foto de perfil",200,200,"Mínimo 20 × 20, use 200 ou mais."],
+["Pinterest","Pin padrão",1000,1500,"Proporção 2:3."],
+["WhatsApp","Status",1080,1920,"9:16."],
+["Twitch","Banner do canal",1200,480,"Faixa larga."],
+["Impressão","A4 (300 dpi)",2480,3508,"210 × 297 mm. Adicione 3 mm de sangria."],
+["Impressão","A5 (300 dpi)",1748,2480,"148 × 210 mm. Bom para flyer."],
+["Impressão","A3 (300 dpi)",3508,4961,"297 × 420 mm."],
+["Papelaria","Cartão de visita",1063,591,"90 × 50 mm. Sangria de 3 mm."],
+["Instagram","Capa de destaque",1080,1920,"Centralize o ícone: só o círculo central aparece."],
+["Instagram","Capa de Reels (grid)",1080,1440,"Recorte 3:4 do perfil. Mantenha o título no centro."],
+["Threads","Post vertical",1080,1350,"Proporção 4:5."],
+["Web","Open Graph (link)",1200,630,"Imagem que aparece ao compartilhar um link."],
+["Web","Favicon",512,512,"Exporte também em 32 e 16 px."],
+["Web","Hero de site",1920,1080,"Deixe o texto longe das bordas."],
+["Web","Banner retângulo médio",300,250,"Anúncio display."],
+["Web","Banner leaderboard",728,90,"Anúncio display horizontal."],
+["Web","Banner arranha-céu",160,600,"Anúncio display vertical."],
+["Web","Header de e-mail",600,200,"Largura padrão de 600 px; a altura é livre."],
+["Web","Slide 16:9",1920,1080,"PowerPoint, Keynote, Google Slides."],
+["Web","Fundo do Zoom",1920,1080,"Evite elementos no centro, onde fica a pessoa."],
+["Web","Capa do Notion",1500,600,"Cortada nas laterais em telas menores."],
+["Web","Ícone de app",1024,1024,"Quadrado sem cantos arredondados; o sistema recorta."],
+["Música","Capa de playlist (Spotify)",1000,1000,"Mínimo recomendado de 300 × 300 px."],
+["Música","Capa de podcast",3000,3000,"Padrão exigido pela maioria das plataformas."],
+["Música","CD: capa frontal (300 dpi)",1417,1417,"120 × 120 mm. Sangria de 3 mm."],
+["Música","CD: traseira (300 dpi)",1772,1394,"150 × 118 mm, sem as laterais da lombada. Confirme o gabarito da gráfica."],
+["Música","CD: disco / rótulo (300 dpi)",1394,1394,"118 mm de diâmetro, furo central de 15 mm. Exporte com máscara circular."],
+["Música","Disco de vinil 12\": capa (300 dpi)",3720,3720,"Cerca de 31,5 × 31,5 cm. Sangria de 3 mm."],
+["Música","Disco de vinil 7\": capa (300 dpi)",2126,2126,"18 × 18 cm. Sangria de 3 mm."],
+["Música","Vinil: rótulo central (300 dpi)",1181,1181,"Cerca de 100 mm de diâmetro, furo de ~7 mm."],
+["Música","Fita K7: cartela J-card (300 dpi)",1949,1193,"Aproximadamente 165 × 101 mm aberta. Varia por gráfica; confirme o gabarito."],
+["Música","Fita de vídeo VHS: capa (300 dpi)",2209,1217,"Aproximadamente 187 × 103 mm (frente). Varia por modelo; confirme o gabarito."],
+["Música","DVD: capa aberta (300 dpi)",3224,2161,"273 × 183 mm: frente, lombada (14 mm) e traseira. Sangria de 3 mm."],
+["Música","DVD: frente (300 dpi)",1535,2161,"130 × 183 mm. Use ao trabalhar só a frente."],
+["Música","DVD: disco / rótulo (300 dpi)",1394,1394,"118 mm de diâmetro, furo central de 15 mm."],
+["Livros","Capa de ebook (Kindle)",1600,2560,"Proporção 1:1,6, lado maior com 2560 px."],
+["Livros","14 × 21 cm (padrão BR)",1654,2480,"Romance, conto, crônica, biografia, autoajuda. Variação: 13,8 × 21 cm. Medida da página; sangria de 3 mm."],
+["Livros","16 × 23 cm (expandido)",1890,2717,"Não ficção, técnico, acadêmico. Variação: 15,5 × 22,5 cm."],
+["Livros","Bolso 11 × 18 cm",1299,2126,"Edição econômica, poesia. Variação: 10,5 × 17,8 cm."],
+["Livros","Bolso 12,5 × 18 cm",1476,2126,"Romance popular e guias."],
+["Livros","Pocket 10 × 15 cm",1181,1772,"Livretos e coletâneas curtas (A6)."],
+["Livros","17 × 24 cm",2008,2835,"Técnico, jurídico, apostila."],
+["Livros","20 × 25 cm",2362,2953,"Técnico e didático com imagens."],
+["Livros","21 × 28 cm",2480,3307,"Didático, atlas, catálogo. O A4 (21 × 29,7 cm) está em Impressão."],
+["Livros","24,5 × 30 cm",2894,3543,"Livro de arte, arquitetura, fotografia, mesa de centro."],
+["Livros","Quadrado 15 × 15 cm",1772,1772,"Infantil ilustrado e fotografia."],
+["Livros","Quadrado 20 × 20 cm",2362,2362,"Infantil, fotografia e design."],
+["Livros","Quadrado 21 × 21 cm",2480,2480,"Infantil, fotografia e design."],
+["Livros","KDP 6 × 9 pol (15,24 × 22,86 cm)",1800,2700,"Amazon KDP. Próximo do 16 × 23 cm. Sangria de 0,125 pol (3,2 mm)."],
+["Livros","KDP 5,5 × 8,5 pol (13,97 × 21,59 cm)",1650,2550,"Amazon KDP. Próximo do 14 × 21 cm. Sangria de 0,125 pol (3,2 mm)."],
+["Portfólio","Behance (projeto)",808,632,"Largura de 808 px; a altura é livre."],
+["Portfólio","Dribbble (shot)",1600,1200,"Proporção 4:3."],
+["Impressão","A6 (300 dpi)",1240,1748,"105 × 148 mm. Sangria de 3 mm."],
+["Impressão","A2 (300 dpi)",4961,7016,"420 × 594 mm. Trabalhe em escala menor se pesar."],
+["Impressão","A1 (150 dpi)",3508,4967,"594 × 841 mm em 150 dpi (em 300 dpi o arquivo fica enorme). Confira com a gráfica.",25.4/150],
+["Impressão","Cartão postal (300 dpi)",1181,1772,"100 × 150 mm. Sangria de 3 mm."],
+["Impressão","Folder 3 dobras (300 dpi)",3508,2480,"297 × 210 mm aberto. Dobras em ~99 mm; verifique com a gráfica."],
+["Sinalização","Banner de lona 90 × 120 cm",900,1200,"Arte em 1 px = 1 mm. Sangria de 2 a 5 cm.",1],
+["Sinalização","Outdoor 9 × 3 m",900,300,"Arte em 1 px = 1 cm. Mantenha o texto longe das bordas e confirme com o fornecedor.",10],
+["Sinalização","Faixa 3 × 1 m",300,100,"Arte em 1 px = 1 cm.",10],
+["Sinalização","Banner roll-up 80 × 200 cm",800,2000,"Arte em 1 px = 1 mm. Deixe cerca de 20 cm do rodapé livres.",1],
+["Impressão","Adesivo 5 × 5 cm (300 dpi)",591,591,"Acrescente 2 mm de sangria e linha de corte."],
+["Impressão","Marca-página 5 × 15 cm (300 dpi)",591,1772,"Tamanho mais comum. Sangria de 3 mm e margem de segurança de 3 mm."],
+["Impressão","Marca-página 6 × 18 cm (300 dpi)",709,2126,"Versão maior. Sangria de 3 mm."],
+["Impressão","Marca-página 5 × 20 cm (300 dpi)",591,2362,"Versão alongada. Sangria de 3 mm."],
+["Midori / Journal","Regular: miolo (refil)",1299,2480,"11 × 21 cm. Padrão Traveler's Company; metade de uma folha A4 cortada na altura."],
+["Midori / Journal","Regular: capa fechada",1417,2598,"Cerca de 12 × 22 cm. A capa fica 1 a 1,5 cm mais alta que o miolo."],
+["Midori / Journal","Passport: miolo (refil)",1051,1465,"8,9 × 12,4 cm, tamanho de passaporte."],
+["Midori / Journal","Passport: capa fechada",1157,1583,"Cerca de 9,8 × 13,4 cm."],
+["Midori / Journal","A5: miolo",1748,2480,"14,8 × 21 cm. O mais popular no Brasil."],
+["Midori / Journal","A5 slim: miolo",1594,2362,"13,5 × 20 cm. Versão artesanal mais esguia."],
+["Midori / Journal","A5: capa fechada",1890,2598,"Cerca de 16 × 22 cm."],
+["Midori / Journal","A6: miolo",1240,1748,"10,5 × 14,8 cm. Bolso."],
+["Midori / Journal","A6 slim: miolo",1063,1594,"9 × 13,5 cm."],
+["Midori / Journal","A6: capa fechada",1358,1831,"Cerca de 11,5 × 15,5 cm."],
+["Midori / Journal","Pocket: miolo",1063,1654,"9 × 14 cm. Estilo Moleskine / Field Notes."],
+["Midori / Journal","Pocket: capa fechada",1181,1772,"Cerca de 10 × 15 cm."],
+["Midori / Journal","B6: miolo",1476,2079,"12,5 × 17,6 cm."],
+["Midori / Journal","B6 slim: miolo",1299,2079,"11 × 17,6 cm."],
+["Midori / Journal","B5: capa fechada",2362,3071,"Cerca de 20 × 26 cm. Pasta de trabalho ou estúdio."],
+["Midori / Journal","A4: capa fechada",2717,3661,"Cerca de 23 × 31 cm. Pasta de trabalho ou estúdio."],
+["Papelaria","Envelope DL",1299,2598,"11 × 22 cm. O mais comum para carta comercial."],
+["Papelaria","Envelope carta (C6)",1346,1913,"11,4 × 16,2 cm."],
+["Papelaria","Envelope saco (C4)",2705,3827,"22,9 × 32,4 cm. Cabe folha A4 sem dobrar."],
+["Papelaria","Crachá (CR80)",638,1016,"5,4 × 8,6 cm em pé, tamanho de cartão de crédito."],
+["Papelaria","Papel timbrado A4",2480,3508,"21 × 29,7 cm. Deixe margem para cabeçalho e rodapé."],
+["Editorial","Revista A4",2480,3508,"21 × 29,7 cm. Sangria de 3 mm."],
+["Editorial","Revista A5",1748,2480,"14,8 × 21 cm. Sangria de 3 mm."],
+["Editorial","Catálogo A4 paisagem",3508,2480,"29,7 × 21 cm. Sangria de 3 mm."],
+["Editorial","Zine A6",1240,1748,"10,5 × 14,8 cm. Uma folha A4 frente e verso rende 8 páginas."],
+["Editorial","Jornal tabloide",3307,4724,"Cerca de 28 × 40 cm. Varia por jornal; confirme com a gráfica."],
+["Promocional","Flyer A5",1748,2480,"14,8 × 21 cm. Sangria de 3 mm."],
+["Promocional","Panfleto 10 × 15 cm",1181,1772,"Sangria de 3 mm."],
+["Promocional","Cartaz A3",3508,4961,"29,7 × 42 cm."],
+["Promocional","Cartaz A2",4961,7016,"42 × 59,4 cm."]
+];
+D.forEach(d=>{if(d[0]==="Música")d[0]="Música e mídia física"});
+const cats=["Todos",...new Set(D.map(d=>d[0]))];
+let cat="Todos";
+const $=id=>document.getElementById(id);
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function ratio(w,h){const g=gcd(w,h),x=w/g,y=h/g;return (x<=21&&y<=21)?x+":"+y:(w/h).toFixed(2).replace(".",",")+":1"}
+function tabs(){$("tabs").innerHTML=cats.map(c=>`<button class="tab${c===cat?" on":""}" data-c="${c}">${c}</button>`).join("")}
+function cards(){
+const q=$("q").value.toLowerCase().trim();
+const L=D.filter(d=>(cat==="Todos"||d[0]===cat)&&(!q||(d[0]+" "+d[1]+" "+d[2]+"x"+d[3]).toLowerCase().includes(q)));
+$("grid").innerHTML=L.length?L.map(d=>{
+const m=100,s=Math.min(m/d[2],m/d[3]),pw=Math.max(8,d[2]*s*1.1),ph=Math.max(8,d[3]*s*1.1);
+return `<div class="card"><div class="pv"><i style="width:${pw}px;height:${ph}px"></i></div>
+<div class="plat">${d[0]}</div><div class="nm">${d[1]}</div>
+<div class="row"><div class="sz">${d[2]} × ${d[3]}</div><span class="ch">${ratio(d[2],d[3])}</span></div>
+<div class="nt">${d[4]}</div>
+<button class="cp" data-t="${d[2]} x ${d[3]}">Copiar medida</button></div>`}).join(""):'<div class="empty">Nada por aqui. Tente outra busca.</div>';
+}
+function copy(t,btn){
+let ok=false;
+try{const x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();ok=document.execCommand("copy");x.remove()}catch(e){}
+if(!ok){try{navigator.clipboard.writeText(t);ok=true}catch(e){}}
+const o=btn.textContent;btn.textContent=ok?"Copiado!":t;btn.classList.add("ok");
+setTimeout(()=>{btn.textContent=o;btn.classList.remove("ok")},1300);
+}
+$("tabs").onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;tabs();cards()}};
+$("grid").onclick=e=>{if(e.target.classList.contains("cp"))copy(e.target.dataset.t,e.target)};
+$("q").oninput=cards;
+function calc(){const a=+$("a").value,b=+$("b").value,c=+$("c").value;
+$("r").textContent=(a>0&&b>0&&c>0)?"Altura: "+Math.round(c*b/a)+" px":"—"}
+["a","b","c"].forEach(i=>$(i).oninput=calc);
+const ORD=["Todos","Instagram","Threads","LinkedIn","YouTube","Facebook","X (Twitter)","TikTok","Pinterest","WhatsApp","Twitch","Impressão","Papelaria","Livros","Editorial","Promocional","Sinalização","Midori / Journal","Música e mídia física","Web","Portfólio"];
+const PH=new Set(["Impressão","Papelaria","Livros","Editorial","Promocional","Sinalização","Midori / Journal","Música e mídia física"]);
+let unit="cm";
+document.head.insertAdjacentHTML("beforeend","<style>.r2{display:flex;gap:6px}.r2 .cp:first-child{flex:1}.cp.mini{padding:7px 12px}.px{font:500 12px 'IBM Plex Mono',monospace;color:var(--mut)}#u{flex:0 0 auto;cursor:pointer}</style>");
+$("q").insertAdjacentHTML("afterend",'<select class="search" id="u" style="flex:0 0 auto;min-width:0" title="Unidade das medidas impressas"><option value="cm">Impressão em cm</option><option value="mm">Impressão em mm</option><option value="px">Impressão em px</option></select>');
+function tabs(){const t=ORD.filter(c=>c==="Todos"||D.some(d=>d[0]===c));$("tabs").innerHTML=t.map(c=>`<button class="tab${c===cat?" on":""}" data-c="${c}">${c}</button>`).join("")}
+function cards(){
+const q=$("q").value.toLowerCase().trim();
+const L=D.filter(d=>(cat==="Todos"||d[0]===cat)&&(!q||(d[0]+" "+d[1]+" "+d[2]+"x"+d[3]).toLowerCase().includes(q)));
+$("grid").innerHTML=L.length?L.map(d=>{
+const ph=PH.has(d[0]),f=d[5]||25.4/300;
+let w=d[2],h=d[3],u="px",tag=ratio(d[2],d[3]),sub="";
+if(ph){
+if(unit!=="px"){const k=unit==="cm"?f/10:f;w=+(d[2]*k).toFixed(1);h=+(d[3]*k).toFixed(1);u=unit;sub=d[2]+" × "+d[3]+" px"}
+tag=d[5]>=1?"1 px = 1 "+(d[5]===1?"mm":"cm"):d[5]?"150 dpi":"300 dpi"+(/sangria de 3 mm/i.test(d[4])?" · +3 mm":"");
+}
+const s=Math.min(100/d[2],100/d[3]),pw=Math.max(8,d[2]*s*1.1),ph2=Math.max(8,d[3]*s*1.1);
+return `<div class="card"><div class="pv"><i style="width:${pw}px;height:${ph2}px"></i></div>
+<div class="plat">${d[0]}</div><div class="nm">${d[1]}</div>
+<div class="row"><div class="sz">${w} × ${h}${u==="px"?"":" "+u}</div><span class="ch">${tag}</span></div>
+<div class="px">${sub||"&nbsp;"}</div>
+<div class="nt">${d[4]}</div>
+<div class="r2"><button class="cp" data-t="${w} x ${h}">Copiar medida</button><button class="cp mini" data-t="${w}" title="Copiar só a largura">L</button><button class="cp mini" data-t="${h}" title="Copiar só a altura">A</button></div></div>`}).join(""):'<div class="empty">Nada por aqui. Tente outra busca.</div>';
+}
+$("grid").onclick=e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.t,b)};
+$("u").onchange=e=>{unit=e.target.value;cards()};
+tabs();cards();calc();
+</script>
+</body>
+</html>
